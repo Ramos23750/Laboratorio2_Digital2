@@ -11,32 +11,6 @@
 #include <stdlib.h>
 #include "LCD.h"
 
-void inicializar_LCD_8bits()
-{	
-	//bits de salida del lcd
-	DDRD |= (1 << DDD2) | (1 << DDD3) | (1 << DDD4) | (1 << DDD5) | (1 << DDD6) | (1 << DDD7); //PD2 a PD7
-	DDRC |= (1 << DDC0) | (1 << DDC1); //PINC0 y PINC1
-	DDRB |= (1 << DDB0) | (1 << DDB1); //E y RS
-	PORTB &= ~((1 << PORTB0) | (1 << PORTB1));
-	PORTD &= ~((1 << DDD2) | (1 << DDD3) | (1 << DDD4) | (1 << DDD5) | (1 << DDD6) | (1 << DDD7));
-	PORTC &= ~((1 << DDC0) | (1 << DDC1));
-	//Power on
-	_delay_ms(20);
-	LCD_PORT(0x30);
-	_delay_ms(5);
-	LCD_PORT(0x30);
-	_delay_ms(1);
-	LCD_PORT(0x30);
-	_delay_ms(20);
-	LCD_PORT(0x38); //function set
-	_delay_ms(1);
-	LCD_PORT(0x0C); //Display on/off
-	_delay_ms(1);
-	LCD_PORT(0x06); //Entry mode
-	_delay_ms(1);
-	LCD_PORT(0x01); //Clear display
-	
-}
 void LCD_PORT(uint8_t a)
 {
 	//D0
@@ -80,14 +54,45 @@ void LCD_PORT(uint8_t a)
 	else
 	PORTD &= ~(1 << PORTD7);
 }
+
 void LCD_CMD(char a)
 {
-	PORTB &= ~(1 << PORTB1);
+	PORTB &= ~(1 << PORTB0); //RS -> 0
 	LCD_PORT(a);
-	PORTB |= (1 << PORTB1);
+	PORTB |= (1 << PORTB1); //En -> 1
 	_delay_ms(4);
-	PORTB &= ~(1 << PORTB1);
+	PORTB &= ~(1 << PORTB1); //En -> 0
 }
+
+void inicializar_LCD_8bits()
+{	
+	//bits de salida del lcd
+	DDRD |= (1 << DDD2) | (1 << DDD3) | (1 << DDD4) | (1 << DDD5) | (1 << DDD6) | (1 << DDD7); //PD2 a PD7
+	DDRC |= (1 << DDC0) | (1 << DDC1); //PINC0 y PINC1
+	DDRB |= (1 << DDB0) | (1 << DDB1); //E y RS
+	PORTB &= ~((1 << PORTB0) | (1 << PORTB1));
+	PORTD &= ~((1 << DDD2) | (1 << DDD3) | (1 << DDD4) | (1 << DDD5) | (1 << DDD6) | (1 << DDD7));
+	PORTC &= ~((1 << DDC0) | (1 << DDC1));
+	
+	LCD_PORT(0x00);
+	//Power on
+	_delay_ms(20);
+	LCD_CMD(0x30);
+	_delay_ms(5);
+	LCD_CMD(0x30);
+	_delay_ms(1);
+	LCD_CMD(0x30);
+	_delay_ms(20);
+	LCD_CMD(0x38); //function set
+	_delay_ms(1);
+	LCD_CMD(0x0C); //Display on/off
+	_delay_ms(1);
+	LCD_CMD(0x06); //Entry mode
+	_delay_ms(1);
+	LCD_CMD(0x01); //Clear display
+	
+}
+
 
 void LCD_write_char(char c)
 {
@@ -95,7 +100,7 @@ void LCD_write_char(char c)
 	//CD = c & 0x3F;
 	//CC = (c & 0xC0) >> 6;
 	//RS => 1
-	PORTB |= (1 << PORTB0);
+	PORTB |= (1 << PORTB0); //RS --> 1
 	LCD_PORT(c);
 	PORTB |= (1 << PORTB1);
 	_delay_ms(4);

@@ -21,18 +21,19 @@
 /********************** Main Loop ***************************/
 int main(void)
 {
+	inicializar_LCD_8bits();
+	LCD_set_cursor(1,1);
+	LCD_write_char('H');
+	LCD_write_char('o');
+	LCD_write_char('l');
+	LCD_write_char('a');
+	LCD_write_char('n');
+	LCD_write_char('d');
+	LCD_write_char('a');
 
     while (1) 
     {
-		inicializar_LCD_8bits();
-		LCD_set_cursor(1,1);
-		LCD_write_char('H');
-		LCD_write_char('o');
-		LCD_write_char('l');
-		LCD_write_char('a');
-		LCD_write_char('n');
-		LCD_write_char('d');
-		LCD_write_char('a');
+		
     }
 }
 
