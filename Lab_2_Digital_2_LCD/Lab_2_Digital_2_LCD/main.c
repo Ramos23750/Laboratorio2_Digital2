@@ -30,11 +30,13 @@ int main(void)
 	LCD_write_char('n');
 	LCD_write_char('d');
 	LCD_write_char('a');
+	LCD_set_cursor(1,2);
+	LCD_write_char('B');
 
-    while (1) 
-    {
+	while (1)
+	{
 		
-    }
+	}
 }
 
 /******************* Non-interrupt functions ******************************/
@@ -43,3 +45,4 @@ int main(void)
 
 /******************** Interrupt functions ****************************/
 
+///////////////////////////Pruebas
