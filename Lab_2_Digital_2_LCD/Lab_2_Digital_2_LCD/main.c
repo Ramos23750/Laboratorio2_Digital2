@@ -14,25 +14,18 @@
 #include <avr/interrupt.h>
 #include <stdlib.h>
 #include "LCD/LCD.h"
+#include "ADC/ADC.h"
+#include "UART/UART.h"
 /********************* Variables ****************************/
-
+float pot1,pot2; //Variables donde se guardaran los valores 
 /********************  Function Prototype *****************************/
 
 /********************** Main Loop ***************************/
 int main(void)
 {
-	inicializar_LCD_8bits();
-	LCD_set_cursor(1,1);
-	LCD_write_char('H');
-	LCD_write_char('o');
-	LCD_write_char('l');
-	LCD_write_char('a');
-	LCD_write_char('n');
-	LCD_write_char('d');
-	LCD_write_char('a');
-	LCD_set_cursor(1,2);
-	LCD_write_char('B');
-
+	init8bits();
+	LCD_SET_CURSOR(1,1);
+	
 	while (1)
 	{
 		

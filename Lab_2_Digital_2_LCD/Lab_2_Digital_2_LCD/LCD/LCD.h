@@ -13,9 +13,12 @@
 #ifndef LCD_H_
 #define LCD_H_
 
-void inicializar_LCD_8bits(void);
-void LCD_CMD(char a);
-void LCD_write_char(char c);
-void LCD_write_string(char *a);
-void LCD_set_cursor(char c, char f);
+void init8bits(void);
+void LCDCMD(char a);
+void LCD_WRITE_CHAR(char c);
+void LCD_WRITE_STRING(char *a);
+void LCDPORT(char a);
+void LCD_SET_CURSOR(char c, char f);
+void LCD_SHIFT_RIGHT(void);
+void LCD_SHIFT_LEFT(void);
 #endif /* LCD_H_ */
